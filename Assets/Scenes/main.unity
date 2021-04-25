@@ -412,6 +412,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spider: {fileID: 1728475871}
+  pl_enter: 0
 --- !u!4 &730296755
 Transform:
   m_ObjectHideFlags: 0
@@ -3286,7 +3287,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4484650457023768733
 Transform:
   m_ObjectHideFlags: 0
