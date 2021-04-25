@@ -31,10 +31,13 @@ public class sTrap : MonoBehaviour
     {
         if (pl_enter)
         {
-            Vector3 targetPoint = player.transform.position;
-            Quaternion targetRotation = Quaternion.LookRotation(targetPoint - spider.transform.position);
-            targetRotation = Quaternion.Euler(targetRotation.eulerAngles.x, targetRotation.eulerAngles.y + 180, targetRotation.eulerAngles.z);
-            spider.transform.rotation = targetRotation;
+            if (player != null)
+            {
+                Vector3 targetPoint = player.transform.position;
+                Quaternion targetRotation = Quaternion.LookRotation(targetPoint - spider.transform.position);
+                targetRotation = Quaternion.Euler(targetRotation.eulerAngles.x, targetRotation.eulerAngles.y + 180, targetRotation.eulerAngles.z);
+                spider.transform.rotation = targetRotation;
+            }
         }
     }
 }

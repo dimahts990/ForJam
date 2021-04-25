@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SpiderAnimController : MonoBehaviour
 {
+    public GameObject col;
+    bool isCl = false;
     public Animator anim;
     Rigidbody rb;
     Vector3 v3;
@@ -14,25 +16,35 @@ public class SpiderAnimController : MonoBehaviour
     }
     void FixedUpdate()
     {
-        float speed = (rb.position-v3).magnitude;
-        if (speed >= 0.00001f)
+        isCl = col.GetComponent<ThisObjTrig>().IsTrig;
+        if (!isCl)
         {
-            anim.SetFloat("Wspeed", speed*20f);
-            if (fwd())
+            float speed = (rb.position - v3).magnitude;
+            if (speed >= 0.00001f)
             {
-                anim.SetBool("isActive", true);
-                anim.SetBool("isFire", false);
+                anim.SetFloat("Wspeed", speed * 20f);
+                if (fwd())
+                {
+                    anim.SetBool("isActive", true);
+                    anim.SetBool("isFire", false);
+                }
+                else
+                {
+                    anim.SetBool("isFire", true);
+                }
             }
-            else
+            if (speed <= 0.00001f)
             {
-                anim.SetBool("isFire", true);
+                anim.SetBool("isFire", false);
+                anim.SetBool("isActive", false);
+                anim.SetFloat("Wspeed", 1.0f);
             }
         }
-        if (speed <= 0.00001f)
-        {
-            anim.SetBool("isFire", false);
-            anim.SetBool("isActive", false);
-            anim.SetFloat("Wspeed", 1.0f);
+        else
+        {                                                                                                      
+            anim.SetBool("isAtt", true);
+            GameObject pl = col.GetComponent<ThisObjTrig>().player;                                                                  //////////   ялепж    /////////
+            Destroy(pl);
         }
         v3 = rb.position;
     }
