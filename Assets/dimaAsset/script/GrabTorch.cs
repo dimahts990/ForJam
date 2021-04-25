@@ -36,18 +36,17 @@ public class GrabTorch : MonoBehaviour
     private IEnumerator startGrab()
     {
         anim.SetTrigger("grabTorch");
-        yield return new WaitForSeconds(2.20f);
+        yield return new WaitForSeconds(0.73f);
         torch.GetComponent<Rigidbody>().isKinematic = true;
         torch.GetComponent<CapsuleCollider>().enabled = false;
         torch.SetParent(RightHand);
-        torch.localPosition = new Vector3(-0.2f, 0.2f, 0);
-        torch.localRotation = Quaternion.Euler(new Vector3(0.6f, 0.9f, 230.4f));
-        yield return new WaitForSeconds(2f);
+        torch.localPosition = new Vector3(-0.3f, 0.1f, 0);
+        torch.localRotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, 75f));
+        yield return new WaitForSeconds(0.67f);
         rigActivate = true;
-        yield return new WaitForSeconds(5.10f);
+        yield return new WaitForSeconds(1.7f);
         transform.GetComponent<PlayerMove>().ActivateMove();
         torch.GetComponent<torchControll>().DisableScr();
-        torch.GetChild(0).gameObject.SetActive(true);
         enabled = false;
     }
 }

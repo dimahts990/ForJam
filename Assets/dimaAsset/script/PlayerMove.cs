@@ -73,5 +73,9 @@ public class PlayerMove : MonoBehaviour
     }
     #endregion
 
-    public void ActivateMove() => moveOn = true;
+    public void ActivateMove()
+    {
+        moveOn = true;
+        torchOn = true;
+    }
 }

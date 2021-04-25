@@ -21,10 +21,11 @@ public class torchControll : MonoBehaviour
 
     private void Update()
     {
+
         #region ребенок рядом с факелом и может его взять
         if (!tourchInChild)
         {
-            if (Vector3.Distance(transform.position, player.transform.position) < 15)
+            if (Vector3.Distance(transform.position, player.transform.position) < 1)
             {
                 player.GetComponent<PlayerMove>().torchInChildReady = true;
                 player.GetComponent<GrabTorch>().torch = transform;
@@ -34,8 +35,8 @@ public class torchControll : MonoBehaviour
         }
         else
         {
-            /*light.intensity = Random.Range(2.2f, 2.5f);
-            light.color = new Color(1, Random.Range(0f, 0.255f), 0);*/
+            light.intensity = Random.Range(2.2f, 2.25f);
+            light.color = new Color(1, Random.Range(0.23f, 0.25f), 0);
         }
         #endregion
     }
