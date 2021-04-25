@@ -29,13 +29,13 @@ public class torchControll : MonoBehaviour
             {
                 player.GetComponent<PlayerMove>().torchInChildReady = true;
                 player.GetComponent<GrabTorch>().torch = transform;
+                player.GetComponent<GrabTorch>().AddLightAndMatTorch(transform.GetChild(0).GetChild(0).GetComponent<Light>(), transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Renderer>().material);
             }
             else
                 player.GetComponent<PlayerMove>().torchInChildReady = false;
         }
         else
         {
-            light.intensity = Random.Range(2.2f, 2.25f);
             light.color = new Color(1, Random.Range(0.23f, 0.25f), 0);
         }
         #endregion

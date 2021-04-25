@@ -2135,7 +2135,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &2027070441064867880
 MonoBehaviour:
@@ -2251,6 +2251,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TorchDamag: 0
   debug: 0
+  torchOff: {r: 4.867144, g: 0.56061345, b: 0.53513104, a: 1}
+  torchOn: {r: 47.937256, g: 5.521569, b: 5.2705884, a: 1}
   rig: {fileID: 100139914}
   RightHand: {fileID: 672545734150286010}
   controllerHand: {fileID: 1490930406}
@@ -3284,7 +3286,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4484650457023768733
 Transform:
   m_ObjectHideFlags: 0
