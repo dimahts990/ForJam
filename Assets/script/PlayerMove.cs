@@ -1,64 +1,77 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public class PlayerMove : MonoBehaviour
 {
-    public float xAxis, yAxis, moveSpeed;
-    [SerializeField]
-    Vector3 move;
+    private PlayerInput _input;
+
+    Animator anim;
+    bool moveOn, torchOn;
+    GrabTorch grabTorch;
+    
+    public float moveSpeed;
+    public bool torchInChildReady;
+
+    #region подключение системы ввода, метод Awake и Start
+    private void Awake()
+    {
+        _input = new PlayerInput();
+        _input.Player.Action.performed += context => Action();
+        moveOn = true;
+    }
+
+    private void OnEnable() => _input.Enable();
+
+    private void OnDisable() => _input.Disable();
+
+    private void Start()
+    {
+        anim = GetComponent<Animator>();
+        grabTorch = GetComponent<GrabTorch>();
+    }
+    #endregion
 
     private void Update()
     {
-        xAxis = Input.GetAxis("Horizontal");
-        yAxis = Input.GetAxis("Vertical");
-
-        #region какая то херня
-        /*transform.rotation = Quaternion.AngleAxis(rotationLerp, Vector3.up);
-        rotationLerp = Mathf.Lerp(0, 360, test);
-        if(xAxis!=0 || yAxis != 0)
+        if (moveOn)
         {
-
-        }*//*
-        if (xAxis > 0)
-        {
-            transform.rotation = Quaternion.Euler(0, 90, 0);
+            Vector3 direction = new Vector3(_input.Player.Move.ReadValue<Vector2>().x, 0, _input.Player.Move.ReadValue<Vector2>().y);
+            if (direction != Vector3.zero)
+            {
+                Move(direction);
+            }
+            else anim.SetBool("walk", false);
         }
-        if (xAxis < 0)
-        {
-            transform.rotation = Quaternion.Euler(0, 270, 0);
-        }
-        if (yAxis > 0)
-        {
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
-        if (yAxis < 0)
-        {
-            transform.rotation = Quaternion.Euler(0, 180, 0);
-        }*/
-        #endregion
+    }
 
-        if (xAxis != 0 || yAxis != 0)
+    private void Action()
+    {
+        if (!torchOn)
         {
-            move = new Vector3(xAxis, 0, yAxis);
-            StartCoroutine(playerMove());
+            if (torchInChildReady)
+            {
+                moveOn = false;
+                grabTorch.GrabTourchStart();
+            }
         }
         else
         {
-            move = Vector3.zero;
-            StopCoroutine(playerMove());
+            //действия факела
         }
     }
 
-    IEnumerator playerMove()
+    #region реализация передвижения игрока
+    void Move(Vector3 direction)
     {
-        while (true)
-        {
-            transform.Translate(move * moveSpeed * Time.deltaTime, Space.World);
+        transform.Translate(direction * moveSpeed * Time.deltaTime, Space.World);
+        anim.SetBool("walk", true);
 
-            if (move != Vector3.zero)
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(move), 5 * Time.deltaTime);
-            yield return null;
-        }
+        if (direction != Vector3.zero)
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), 5 * Time.deltaTime);
     }
+    #endregion
+
+    public void ActivateMove() => moveOn = true;
 }
