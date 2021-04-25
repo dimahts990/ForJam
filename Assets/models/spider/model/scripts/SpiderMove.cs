@@ -44,11 +44,11 @@ public class SpiderMove : MonoBehaviour
                 }
                 if (isCl2 && fire)
                 {
-                    rb.MovePosition(rb.position + transform.forward * 0.015f);
+                    rb.MovePosition(rb.position + transform.forward * 0.025f);
                 }
                 else
                 {
-                    rb.MovePosition(rb.position + -transform.forward * 0.025f);
+                    rb.MovePosition(rb.position + -transform.forward * 0.045f);
                 }
             }
         }
