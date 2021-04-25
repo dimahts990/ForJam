@@ -15,7 +15,7 @@ public class SpiderAnimController : MonoBehaviour
     void FixedUpdate()
     {
         float speed = (rb.position-v3).magnitude;
-        if (speed >= 0.0001f)
+        if (speed >= 0.00001f)
         {
             anim.SetFloat("Wspeed", speed*20f);
             if (fwd())
@@ -28,7 +28,7 @@ public class SpiderAnimController : MonoBehaviour
                 anim.SetBool("isFire", true);
             }
         }
-        if (speed <= 0.0001f)
+        if (speed <= 0.00001f)
         {
             anim.SetBool("isFire", false);
             anim.SetBool("isActive", false);
