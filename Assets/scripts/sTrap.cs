@@ -5,8 +5,9 @@ using UnityEngine;
 public class sTrap : MonoBehaviour
 {
     public Rigidbody spider;
-    bool pl_enter = false;
+    public bool pl_enter = false;
     GameObject player;
+
     void Start()
     {
         Debug.Log(this.gameObject.name);
@@ -34,8 +35,6 @@ public class sTrap : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(targetPoint - spider.transform.position);
             targetRotation = Quaternion.Euler(targetRotation.eulerAngles.x, targetRotation.eulerAngles.y + 180, targetRotation.eulerAngles.z);
             spider.transform.rotation = targetRotation;
-            Rigidbody rb = spider.GetComponent<Rigidbody>();
-            rb.MovePosition(rb.position + -spider.transform.forward * 0.02f);
         }
     }
 }
