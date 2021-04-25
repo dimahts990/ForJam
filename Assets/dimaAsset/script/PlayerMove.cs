@@ -9,8 +9,9 @@ public class PlayerMove : MonoBehaviour
 
     Animator anim;
     bool moveOn, torchOn;
+    float run;
     GrabTorch grabTorch;
-    
+
     public float moveSpeed;
     public bool torchInChildReady;
 
@@ -35,6 +36,8 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
+        anim.SetFloat("run", run);
+
         if (moveOn)
         {
             Vector3 direction = new Vector3(_input.Player.Move.ReadValue<Vector2>().x, 0, _input.Player.Move.ReadValue<Vector2>().y);
@@ -43,6 +46,32 @@ public class PlayerMove : MonoBehaviour
                 Move(direction);
             }
             else anim.SetBool("walk", false);
+            #region бег
+            if (_input.Player.run.ReadValueAsObject() != null)
+            {
+                if (run <= 1)
+                    run += Time.deltaTime;
+                if (moveSpeed <= 3)
+                    moveSpeed += Time.deltaTime;
+            }
+            else
+            {
+                if (run >= 0)
+                    run -= Time.deltaTime;
+                if (moveSpeed >= 1.9f)
+                    moveSpeed -= Time.deltaTime;
+            }
+            #endregion
+
+        }
+
+        if(torchOn && _input.Player.Action.ReadValueAsObject() != null)
+        {
+            grabTorch.TorchDamag = true;
+        }
+        else
+        {
+            grabTorch.TorchDamag = false;
         }
     }
 
@@ -55,10 +84,6 @@ public class PlayerMove : MonoBehaviour
                 moveOn = false;
                 grabTorch.GrabTourchStart();
             }
-        }
-        else
-        {
-            //действия факела
         }
     }
 

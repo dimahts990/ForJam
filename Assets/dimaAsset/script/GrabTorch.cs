@@ -5,8 +5,12 @@ using UnityEngine.Animations.Rigging;
 
 public class GrabTorch : MonoBehaviour
 {
-    bool rigActivate;
+    public bool TorchDamag,debug;
+    bool rigActivate, torchInChild;
+    float activatedTorch;
     Animator anim;
+    Vector3 offTorhcPos = new Vector3(0.3f, 1.0f, 0.3f), onTorhcPos = new Vector3(-0.1f, 1.6f, 1.1f);
+    Quaternion offTorhcRot = new Quaternion(0.5f, -0.5f, -0.3f, 0.6f), onTorhcRot = new Quaternion(0.7f, -0.3f, -0.5f, 0.4f);
 
     [SerializeField]
     Rig rig;
@@ -22,15 +26,38 @@ public class GrabTorch : MonoBehaviour
 
     private void Update()
     {
-        if (rigActivate && rig.weight <= 1)
+        if (!debug)
         {
-            rig.weight += Time.deltaTime / 3f;
+            if (!torchInChild)
+            {
+                if (rigActivate && rig.weight <= 1)
+                {
+                    rig.weight += Time.deltaTime / 3f;
+                }
+            }
+            else
+            {
+                controllerHand.localPosition = Vector3.Lerp(offTorhcPos, onTorhcPos, activatedTorch);
+                controllerHand.localRotation = Quaternion.Lerp(offTorhcRot, onTorhcRot, activatedTorch);
+            }
+            if (TorchDamag)
+            {
+                if (activatedTorch <= 1)
+                    activatedTorch += Time.deltaTime;
+            }
+            else
+            {
+                if (activatedTorch >= 0)
+                    activatedTorch -= Time.deltaTime;
+            }
         }
+        Debug.Log(controllerHand.localPosition);
     }
 
     public void GrabTourchStart()
     {
-        StartCoroutine(startGrab());
+        if(!torchInChild)
+            StartCoroutine(startGrab());
     }
 
     private IEnumerator startGrab()
@@ -47,6 +74,6 @@ public class GrabTorch : MonoBehaviour
         yield return new WaitForSeconds(1.7f);
         transform.GetComponent<PlayerMove>().ActivateMove();
         torch.GetComponent<torchControll>().DisableScr();
-        enabled = false;
+        torchInChild = true;
     }
 }
