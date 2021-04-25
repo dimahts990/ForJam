@@ -10,7 +10,7 @@ public class sTrap : MonoBehaviour
 
     void Start()
     {
-        Debug.Log(this.gameObject.name);
+      //  Debug.Log(this.gameObject.name);
     }
 
     void OnTriggerEnter(Collider obj)
